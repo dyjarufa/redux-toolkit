@@ -2,17 +2,25 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
-function App({ count, increment, incrementAmount }) {
-  // agora o count vem como um propriedade do componente
-  // const [count, setCount] = useState(0);
+// function App({ count, increment, incrementAmount }) {
+// agora o count vem como um propriedade do componente
+// const [count, setCount] = useState(0);
+
+export default function App() {
+  //? useSelector --> retorna o pedaço do estado que eu quero recebe, o comp passa encher o estado dentro do redux e comparar o estado anterior para atualizar
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
 
   function handleOnclick() {
-    increment();
+    // increment();
+    dispatch({ type: "counter/increment" });
   }
+
   function handleOnclickAmount() {
-    incrementAmount(5);
+    // incrementAmount(5);
+    dispatch({ type: "counter/incrementAmount", payload: 5 });
   }
 
   return (
@@ -40,7 +48,9 @@ function App({ count, increment, incrementAmount }) {
   );
 }
 
-// mapear estado do redux para o componente
+/*
+? Form OLD-SCHOOL de implementar o redux  
+//* mapear estado do redux para o componente
 const mapStateToProps = (state) => {
   return {
     count: state.counter.value,
@@ -58,3 +68,4 @@ const mapDispatchToProps = (dispatch) => {
 
 //* connect injeta o estado aplicação internamente (counter.value = 0)
 export default connect(mapStateToProps, mapDispatchToProps)(App); // conectar o componente com o redux - padrão HOC
+ */
