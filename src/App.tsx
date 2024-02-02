@@ -3,6 +3,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { connect, useDispatch, useSelector } from "react-redux";
+import { increment, incrementAmount } from "./features/counter/counter.slice";
+import { useAppSelector } from "./hooks";
 
 // function App({ count, increment, incrementAmount }) {
 // agora o count vem como um propriedade do componente
@@ -10,17 +12,23 @@ import { connect, useDispatch, useSelector } from "react-redux";
 
 export default function App() {
   //? useSelector --> retorna o pedaço do estado que eu quero recebe, o comp passa encher o estado dentro do redux e comparar o estado anterior para atualizar
-  const count = useSelector((state) => state.counter.value);
+  // const count = useSelector((state) => state.counter.value);
+
+  //* a partir de agora minha aplicação entende a tipagem pelo o meu hook useAppSelector
+  const count = useAppSelector((state) => state.counter.value);
+  
   const dispatch = useDispatch();
 
   function handleOnclick() {
     // increment();
-    dispatch({ type: "counter/increment" });
+    // dispatch({ type: "counter/increment" });
+    dispatch(increment());
   }
 
   function handleOnclickAmount() {
     // incrementAmount(5);
-    dispatch({ type: "counter/incrementAmount", payload: 5 });
+    // dispatch({ type: "counter/incrementAmount", payload: 5 });
+    dispatch(incrementAmount(5));
   }
 
   return (
